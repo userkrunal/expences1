@@ -1,4 +1,5 @@
 import 'package:expences1/expence/model/ex_model.dart';
+import 'package:expences1/expence/view/first_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -13,6 +14,12 @@ class ExpenceController extends GetxController
   RxBool addincome = false.obs;
   RxBool addexpanse = true.obs;
 
+  String incomexpenses='expenses';
+  num totalincome=0;
+  num overall=0;
+  num totalexpanse=0;
+  int j=0;
+
   RxString expansedate = "${DateTime.now()}".obs;
   RxString expansetime = "${TimeOfDay.now()}".obs;
 
@@ -25,6 +32,7 @@ class ExpenceController extends GetxController
   Future<void> loadDB()
   async {
     dataList.value= await db_helper.read_Db();
+    totalamount();
   }
 
   RxList expenceList=[
@@ -32,6 +40,25 @@ class ExpenceController extends GetxController
   ].obs;
   RxString selectExpence="Food".obs;
   RxList chackList=[false,false].obs;
-  RxString selectincome="Expence".obs;
-  RxBool isExp=false.obs;
+  // RxString selectincome="Expence".obs;
+  // RxBool isExp=false.obs;
+
+  void totalamount()
+  {
+    totalincome=0;
+    totalexpanse=0;
+    for(int i=0;i<dataList.length;i++)
+    {
+      if(dataList[i]['status']==0)
+      {
+        totalincome=totalincome+dataList[i]['amount'];
+      }
+      else if(dataList[i]['status']==1)
+      {
+        totalexpanse=totalexpanse+dataList[i]['amount'];
+      }
+    }
+    overall=totalincome-totalexpanse;
+    update();
+  }
 }

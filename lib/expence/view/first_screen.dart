@@ -391,6 +391,8 @@ class _InsertScreenState extends State<InsertScreen> {
                         children: [
                         GestureDetector(
                             onTap: () {
+                              controller.incomexpenses='income';
+                              controller.j=1;
                               if(controller.b1==false) {
                                 controller.b1.value = true;
                               }
@@ -411,9 +413,12 @@ class _InsertScreenState extends State<InsertScreen> {
 
                         GestureDetector(
                           onTap: () {
+                            controller.incomexpenses='expenses';
+                            controller.j=0;
                             if(controller.b2==false)
                               {
                                 controller.b2.value=true;
+
                               }
                             else
                               {
@@ -457,7 +462,7 @@ class _InsertScreenState extends State<InsertScreen> {
                         ExpenceModel model = ExpenceModel(
                           date: controller.expansedate.value,
                           category: controller.selectExpence.value,
-                          status: controller.addincome.value == false ? 1: 0,
+                          status: controller.incomexpenses== 'expenses'? 1: 0,
                           amount: int.parse(txtAmount.text),
                         );
                         await db_helper.insertinDb(model);
@@ -465,12 +470,14 @@ class _InsertScreenState extends State<InsertScreen> {
                         ExpenceModel model = ExpenceModel(
                           amount: int.parse(txtAmount.text),
                           category: controller.selectExpence.value,
-                          status:controller.addincome.value == false ? 1: 0,
+                          status:controller.incomexpenses== 'expenses' ? 1: 0,
                           date: controller.expansedate.value,
                         );
                         await db_helper.updateDB(model);
                       }
                       await controller.loadDB();
+                      print("--------------${controller.totalexpanse}--------");
+                      print("--------------${controller.totalincome}---------");
                       Get.back();
                     },
                     child: Container(height: 50,width: 200,

@@ -1,3 +1,4 @@
+import 'package:expences1/expence/view/first_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +33,38 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 200,
                   decoration: BoxDecoration(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50),bottomRight: Radius.circular(50)),color: Color(
                       0xffe5d1ac)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        height: 60,
+                        width: 150,
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.green),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 5),
+                            Text("Income",style: TextStyle(fontSize: 20,color: Colors.white),),
+                            SizedBox(height: 5),
+                            Text("${controller.totalincome}",style: TextStyle(fontSize: 15,color: Colors.white),),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 60,
+                        width: 150,
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.red),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 5),
+                            Text("Expenses",style: TextStyle(fontSize: 20,color: Colors.white)),
+                            SizedBox(height: 5),
+                            Text("${controller.totalexpanse}",style: TextStyle(fontSize: 15,color: Colors.white)),
+                          ],
+                        ),
+                      ),
 
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: ListView.builder(

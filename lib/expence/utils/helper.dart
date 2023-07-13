@@ -56,6 +56,12 @@ class DB_Helper {
 
   }
 
+  Future<void> read1_DB()
+  async {
+    database=await creatDB();
+    String query1='SELECT * FROM $dbTname WHERE category="food"';
+
+  }
 
   Future<void> deleteDb(int id)
   async {
@@ -72,11 +78,13 @@ class DB_Helper {
       'category':model.category,
       'amount': model.amount,
       'date': model.date,
-      //'time': model.time,
       'status':model.status
     },where: "id=?",whereArgs:[model.id]
     );
 
   }
+
+
+
 
 }

@@ -14,7 +14,7 @@ class ExpenceController extends GetxController
   RxBool addincome = false.obs;
   RxBool addexpanse = true.obs;
 
-  String incomexpenses='expenses';
+  String? incomexpenses='expenses';
   num totalincome=0;
   num overall=0;
   num totalexpanse=0;

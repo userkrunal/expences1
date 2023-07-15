@@ -267,11 +267,14 @@ class _InsertScreenState extends State<InsertScreen> {
   void initState() {
     super.initState();
     //controller.dataList.value=controller.setDateFormat(DateTime.now()) as List;
-    if(m1['ststus']==0)
+    if(m1['status']==0)
       {
         int index=m1['index'];
         txtAmount=TextEditingController(text: "${controller.dataList[index]['amount']}");
         controller.expansedate.value=controller.dataList[index]['date'];
+        controller.selectExpence.value=controller.dataList[index]['category'];
+        controller.incomexpenses=controller.dataList[index]['inex'];
+
       }
   }
 
@@ -392,7 +395,6 @@ class _InsertScreenState extends State<InsertScreen> {
                         GestureDetector(
                             onTap: () {
                               controller.incomexpenses='income';
-                              controller.j=1;
                               if(controller.b1==false) {
                                 controller.b1.value = true;
                               }
@@ -414,7 +416,6 @@ class _InsertScreenState extends State<InsertScreen> {
                         GestureDetector(
                           onTap: () {
                             controller.incomexpenses='expenses';
-                            controller.j=0;
                             if(controller.b2==false)
                               {
                                 controller.b2.value=true;
@@ -464,20 +465,21 @@ class _InsertScreenState extends State<InsertScreen> {
                           category: controller.selectExpence.value,
                           status: controller.incomexpenses== 'expenses'? 1: 0,
                           amount: int.parse(txtAmount.text),
+                          inex: controller.incomexpenses
                         );
                         await db_helper.insertinDb(model);
                       } else {
                         ExpenceModel model = ExpenceModel(
                           amount: int.parse(txtAmount.text),
+                          id:controller.dataList[m1['index']]['id'],
                           category: controller.selectExpence.value,
                           status:controller.incomexpenses== 'expenses' ? 1: 0,
                           date: controller.expansedate.value,
+                          inex: controller.incomexpenses,
                         );
                         await db_helper.updateDB(model);
                       }
                       await controller.loadDB();
-                      print("--------------${controller.totalexpanse}--------");
-                      print("--------------${controller.totalincome}---------");
                       Get.back();
                     },
                     child: Container(height: 50,width: 200,
@@ -535,6 +537,7 @@ Widget time_date(int i,BuildContext context) {
                     color: Colors.black45,
                     fontSize: 20,
                     fontWeight: FontWeight.w400)),
+
           ),
         ],
       ),

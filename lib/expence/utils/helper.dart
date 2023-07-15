@@ -24,7 +24,7 @@ class DB_Helper {
   Future<Database> ininDB() async {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = join(directory.path, dbPath);
-    String query='CREATE TABLE $dbTname (id INTEGER PRIMARY KEY AUTOINCREMENT,amount INTEGER ,date TEXT,category TEXT,status )';
+    String query='CREATE TABLE $dbTname (id INTEGER PRIMARY KEY AUTOINCREMENT,amount INTEGER ,date TEXT,category TEXT,status INTEGER, inex TEXT)';
     return await openDatabase(path,
       version: 1,
       onCreate: (db, version) async {
@@ -43,6 +43,7 @@ class DB_Helper {
       'amount':expenceModel.amount,
       'date':expenceModel.date,
       'status':expenceModel.status,
+      'inex':expenceModel.inex,
       //'time':expenceModel.time,
     });
   }
@@ -75,10 +76,12 @@ class DB_Helper {
     database = await creatDB();
 
     database!.update(dbTname, {
+      'id':model.id,
       'category':model.category,
       'amount': model.amount,
       'date': model.date,
-      'status':model.status
+      'status':model.status,
+      'inex':model.inex
     },where: "id=?",whereArgs:[model.id]
     );
 

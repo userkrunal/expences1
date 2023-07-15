@@ -83,13 +83,38 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        height: 80,
+                        height: 100,
                         width: 340,
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.white),
-                        child: ListTile(
-                          title: Text("${expenceController.dataList[index]['category']}",style: TextStyle(fontSize: 23),),
-                          subtitle: Text("${expenceController.dataList[index]['amount']}",style: TextStyle(fontSize: 18),),
-                          trailing: Text("${expenceController.dataList[index]['date']}"),
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text("${expenceController.dataList[index]['category']}",style: TextStyle(fontSize: 23),),
+                              subtitle: Text("${expenceController.dataList[index]['amount']}",style: TextStyle(fontSize: 18),),
+                              trailing: Text("${expenceController.dataList[index]['date']}"),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 5,left: 20,right: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () async {
+                                      DB_Helper db_helper=DB_Helper();
+                                      int id=expenceController.dataList[index]['id'];
+                                      await db_helper.deleteDb(id);
+                                      await expenceController.loadDB();
+                                    },
+                                      child: Icon(Icons.delete,color: Colors.black54,size: 20,)),
+                                  InkWell(
+                                    onTap: () {
+                                      Get.toNamed("/first",arguments: {"status":0,"index":index});
+                                    },
+                                      child: Icon(Icons.edit,size: 20,color: Colors.black54,)),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
